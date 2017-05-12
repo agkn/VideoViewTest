@@ -14,6 +14,7 @@ import android.widget.VideoView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private Uri mVideoUri;
     private VideoView mVideoView;
     private Button mPlayButton;
+    private Button mHackButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +51,45 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.changeButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findViewById(R.id.frameView).setBackgroundColor(Color.GRAY);
+                findViewById(R.id.frameView).setBackgroundColor(new Random().nextInt(0xffffff) + 0xff000000);
             }
         });
 
+        mHackButton = (Button)findViewById(R.id.hackButton);
+        mHackButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                MainDialog.create(mVideoUri).show(getFragmentManager(), "PlayVideoDialogFragment");
+            }
+        });
+
+
+        Uri uri = getFileUriIfExists("video.mp4");
+        if (uri != null) {
+            mVideoUri = uri;
+            initVideo();
+        }
     }
+
+    private void initVideo() {
+        if (mVideoView != null) {
+            mVideoView.setVisibility(View.VISIBLE);
+            mVideoView.setVideoURI(mVideoUri);
+            mPlayButton.setVisibility(View.VISIBLE);
+            mHackButton.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    private Uri getFileUriIfExists(String fileName) {
+        final File file = new File(getFilesDir() + File.separator + "images"
+                + File.separator + fileName);
+        if (!file.exists()) return null;
+        return FileProvider.getUriForFile(this,
+                "com.test.my.videoviewtest.fileprovider", file);
+    }
+
+
     private Uri getTempUri(String fileName) {
         final File file = new File(getFilesDir() + File.separator + "images"
                 + File.separator + fileName);
@@ -63,9 +99,10 @@ public class MainActivity extends AppCompatActivity {
                 "com.test.my.videoviewtest.fileprovider", file);
     }
 
+
     private void capture() {
         Intent captureVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        mVideoUri = getTempUri("video.mp4");
+        mVideoUri = getFileUri();
         captureVideoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mVideoUri);
         if (captureVideoIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(captureVideoIntent, REQUEST_VIDEO_CAPTURE);
@@ -75,16 +112,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private Uri getFileUri() {
+        return getTempUri("video.mp4");
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_VIDEO_CAPTURE) {
             if (resultCode == RESULT_OK) {
+                initVideo();
                 MainDialog.create(mVideoUri).show(getFragmentManager(), "PlayVideoDialogFragment");
-                if (mVideoView != null) {
-                    mVideoView.setVisibility(View.VISIBLE);
-                    mVideoView.setVideoURI(mVideoUri);
-                    mPlayButton.setVisibility(View.VISIBLE);
-                }
             } else {
                 // Failed capturing video.
                 finish();

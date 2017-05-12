@@ -45,4 +45,11 @@
             android:layout_weight="0"
             android:text="Change"
         />
+    <Button android:id="@+id/hackButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Hack"
+            android:visibility="gone"
+        />
 </LinearLayout>
