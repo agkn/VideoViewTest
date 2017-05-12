@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">VideoViewTest</string>
+    <string name="play">Play</string>
+    <string name="capture">Capture</string>
+    <string name="VideoView_error_text_invalid_progressive_playback">error_text_invalid_progressive_playback</string>
+    <string name="VideoView_error_text_unknown">error_text_unknown</string>
+    <string name="VideoView_error_button">error_button</string>
+</resources>
