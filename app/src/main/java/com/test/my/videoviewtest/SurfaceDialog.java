@@ -24,7 +24,7 @@ public class SurfaceDialog extends DialogFragment implements SurfaceHolder.Callb
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Dialog dialog = new Dialog(getActivity());
-        dialog.setContentView(R.layout.dialog_main);
+        dialog.setContentView(R.layout.dialog_surface);
 
         dialog.findViewById(R.id.closeButton).setOnClickListener(new View.OnClickListener() {
             @Override
