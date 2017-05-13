@@ -30,11 +30,6 @@ public class MainDialog extends DialogFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.dialog_main);
@@ -65,7 +60,7 @@ public class MainDialog extends DialogFragment {
 
         Uri uri = getArguments().getParcelable(KEY_VIDEO_URI);
         mVideoView.setVisibility(View.VISIBLE);
-        mVideoView.setVideoURI(uri);
+        // mVideoView.setVideoURI(uri);
 
         Button playButton = (Button) dialog.findViewById(R.id.playButton);
         playButton.setVisibility(View.VISIBLE);

@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.changeButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findViewById(R.id.frameView).setBackgroundColor(new Random().nextInt(0xffffff) + 0xff000000);
+                changeBackground();
             }
         });
 
@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
         mHackButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                MainDialog.create(mVideoUri).show(getFragmentManager(), "PlayVideoDialogFragment");
+                //MainDialog.create(mVideoUri).show(getFragmentManager(), "PlayVideoDialogFragment");
+                new SurfaceDialog().show(getFragmentManager(), "SurfaceDialog");
             }
         });
 
@@ -69,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
             mVideoUri = uri;
             initVideo();
         }
+    }
+
+    void changeBackground() {
+        findViewById(R.id.frameView).setBackgroundColor(new Random().nextInt(0xffffff) + 0xff000000);
     }
 
     private void initVideo() {
