@@ -40,6 +40,7 @@ public class SurfaceDialog extends DialogFragment implements SurfaceHolder.Callb
         });
         SurfaceView surface = mSurfaceView = (SurfaceView) dialog.findViewById(R.id.videoView);
         surface.getHolder().addCallback(this);
+        surface.getHolder().setSizeFromLayout();
         return dialog;
     }
 
